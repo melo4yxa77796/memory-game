@@ -47,10 +47,32 @@ for (let i = 0; i < emojis.length; i++) {
   let box = document.createElement("div");
     box.className = "item";
   box.innerHTML = shuf_emojis[i];
-  box.onclick = function () {
-    this.classList.add("boxOpen");
-  };
+  
+
+    box.onclick = function () {
+      if (box.classList.contains("boxOpen")) {
+        box.classList.remove('boxOpen');
+        box.classList.add('closed');
+      } else {
+        box.classList.remove('closed');
+        box.classList.add('boxOpen');
+      }
+    };
+  
+  
 
   document.querySelector(".game-container").appendChild(box);
 };
 
+
+
+/*box.onclick = function(){
+  this.classList.add('boxOpen')
+  setTimeout(function(){
+    if(document.querySelectorAll('.boxOpen').length > 1){
+      if(document.querySelectorAll('.boxOpen'[0].innerHTML == 
+        document.querySelectorAll('.')
+      ))
+    }
+  })
+}*/
