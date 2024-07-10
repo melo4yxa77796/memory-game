@@ -39,36 +39,49 @@ document.addEventListener("DOMContentLoaded", (event) => {
   });
 });
 
-let shuf_emojis = emojis.sort(function () {
+/*let shuf_emojis = emojis.sort(function () {
   return Math.random() > 0.5 ? 1 : -1;
-});
+});*/
+const gameContainer = document.querySelector(".game-container");
+let shuf_emojis = emojis.sort(() => (Math.random() > 0.5 ? 1 : -1));
 
 for (let i = 0; i < emojis.length; i++) {
   let box = document.createElement("div");
   box.className = "item";
   box.innerHTML = shuf_emojis[i];
+  box.dataset.emoji = shuf_emojis[i];
 
   box.onclick = function () {
+    this.classList.add("boxOpen");
+    setTimeout(() => {
+      const openBoxes = document.querySelectorAll(".boxOpen");
+      if (openBoxes.length > 1) {
+        if (openBoxes[0].dataset.emoji === openBoxes[1].dataset.emoji) {
+          openBoxes[0].classList.add("boxMatch");
+          openBoxes[1].classList.add("boxMatch");
+        }
+        openBoxes[0].classList.remove("boxOpen");
+        openBoxes[1].classList.remove("boxOpen");
+      }
+
+      if (document.querySelectorAll(".boxMatch").length === emojis.length) {
+        alert("win");
+      }
+    }, 500);
+  };
+
+  gameContainer.appendChild(box);
+}
+
+/*box.onclick = function () {
     if (box.classList.contains("boxOpen")) {
-      box.classList.remove("boxOpen");
-      box.classList.add("closed");
+      box.classList.remove('boxOpen');
+      box.classList.add('closed');
     } else {
-      box.classList.remove("closed");
-      box.classList.add("boxOpen");
+      box.classList.remove('closed');
+      box.classList.add('boxOpen');
     }
   };
 
   document.querySelector(".game-container").appendChild(box);
-}
-
-/*box.onclick = function(){
-  this.classList.add('boxOpen')
-  setTimeout(function(){
-    if(document.querySelectorAll('.boxOpen').length > 1){
-      if(document.querySelectorAll('.boxOpen'[0].innerHTML == 
-        document.querySelectorAll('.')
-      ))
-    }
-  })
 }*/
-
