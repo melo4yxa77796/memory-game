@@ -32,11 +32,11 @@ const emojis = [
   "😨",
 ];
 
-document.addEventListener('DOMContentLoaded', (event) => {
-    const startButton = document.getElementById('start');
-    startButton.addEventListener('click', () => {
-        window.location.reload();
-    });
+document.addEventListener("DOMContentLoaded", (event) => {
+  const startButton = document.getElementById("start");
+  startButton.addEventListener("click", () => {
+    window.location.reload();
+  });
 });
 
 let shuf_emojis = emojis.sort(function () {
@@ -45,26 +45,21 @@ let shuf_emojis = emojis.sort(function () {
 
 for (let i = 0; i < emojis.length; i++) {
   let box = document.createElement("div");
-    box.className = "item";
+  box.className = "item";
   box.innerHTML = shuf_emojis[i];
-  
 
-    box.onclick = function () {
-      if (box.classList.contains("boxOpen")) {
-        box.classList.remove('boxOpen');
-        box.classList.add('closed');
-      } else {
-        box.classList.remove('closed');
-        box.classList.add('boxOpen');
-      }
-    };
-  
-  
+  box.onclick = function () {
+    if (box.classList.contains("boxOpen")) {
+      box.classList.remove("boxOpen");
+      box.classList.add("closed");
+    } else {
+      box.classList.remove("closed");
+      box.classList.add("boxOpen");
+    }
+  };
 
   document.querySelector(".game-container").appendChild(box);
-};
-
-
+}
 
 /*box.onclick = function(){
   this.classList.add('boxOpen')
