@@ -73,15 +73,4 @@ for (let i = 0; i < emojis.length; i++) {
   gameContainer.appendChild(box);
 }
 
-/*box.onclick = function () {
-    if (box.classList.contains("boxOpen")) {
-      box.classList.remove('boxOpen');
-      box.classList.add('closed');
-    } else {
-      box.classList.remove('closed');
-      box.classList.add('boxOpen');
-    }
-  };
 
-  document.querySelector(".game-container").appendChild(box);
-}*/
