@@ -39,9 +39,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
   });
 });
 
-/*let shuf_emojis = emojis.sort(function () {
-  return Math.random() > 0.5 ? 1 : -1;
-});*/
 const gameContainer = document.querySelector(".game-container");
 let shuf_emojis = emojis.sort(() => (Math.random() > 0.5 ? 1 : -1));
 
@@ -72,5 +69,3 @@ for (let i = 0; i < emojis.length; i++) {
 
   gameContainer.appendChild(box);
 }
-
-
