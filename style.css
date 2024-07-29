@@ -51,6 +51,11 @@ h1 {
   transform-style: preserve-3d;
   perspective: 500px;
 }
+.counter {
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+}
 .item {
   position: relative;
   width: 100px;
