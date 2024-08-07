@@ -67,6 +67,11 @@ h1 {
   background-color: antiquewhite;
   transform: rotateY(180deg);
   transition: 0.5s;
+  cursor: pointer;
+  pointer-events: none;
+}
+.item.enabled {
+  pointer-events: auto;
 }
 .item,
 .boxOpen {
