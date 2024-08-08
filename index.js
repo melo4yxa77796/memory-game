@@ -131,3 +131,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   createGameBoard();
 });
+
+           
+                      
