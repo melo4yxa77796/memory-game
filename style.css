@@ -1,4 +1,4 @@
-*{
+* {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
@@ -48,8 +48,13 @@ h1 {
   height: 430px;
   display: flex;
   gap: 10px;
- transform-style: preserve-3d;
+  transform-style: preserve-3d;
   perspective: 500px;
+}
+.counter {
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
 }
 .item {
   position: relative;
@@ -61,35 +66,31 @@ h1 {
   font-size: 3em;
   background-color: antiquewhite;
   transform: rotateY(180deg);
-  transition:0.5s
+  transition: 0.5s;
+  cursor: pointer;
+  pointer-events: none;
+}
+.item.enabled {
+  pointer-events: auto;
 }
 .item,
-.boxOpen
-{
+.boxOpen {
   transform: rotateY(0deg);
 }
 .item::after {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
   background: #f4c531;
-  transition:  0.5s;
+  transition: 0.5s;
   transform: rotateY(0deg);
   backface-visibility: hidden;
 }
 
 .boxOpen::after,
-.boxMatch::after
- {
+.boxMatch::after {
   transform: rotateY(180deg);
 }
-
-
- 
-    
- 
-   
-    
 
 @media (max-width: 600px) {
   .game-container {
