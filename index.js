@@ -1,5 +1,5 @@
 const apiUrl =
-  "https://raw.githubusercontent.com/melo4yxa77796/melo4yxa77796.github.io/main/images.json"; // Replace with your API URL
+  "https://raw.githubusercontent.com/melo4yxa77796/melo4yxa77796.github.io/main/images.json";
 
 let emojis = [];
 let moveCounter = 0;
