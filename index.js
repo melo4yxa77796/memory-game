@@ -1,25 +1,11 @@
-const emojis = [
-  "🥶",
-  "🥶",
-  "😈",
-  "😈",
-  "👿",
-  "👿",
-  "😡",
-  "😡",
-  "🥵",
-  "🥵",
-  "🤬",
-  "🤬",
-  "🎃",
-  "🎃",
-  "🤮",
-  "🤮",
-  "😰",
-  "😰",
-  "😨",
-  "😨",
-];
+const apiUrl =
+  "https://raw.githubusercontent.com/melo4yxa77796/melo4yxa77796.github.io/main/images.json";
+
+let emojis = [];
+let moveCounter = 0;
+let startTime;
+let elapsedTime = 0;
+let timerInterval;
 
 document.addEventListener("DOMContentLoaded", () => {
   const startButton = document.getElementById("start");
@@ -28,11 +14,6 @@ document.addEventListener("DOMContentLoaded", () => {
   startButton.addEventListener("click", startGame);
   stopButton.addEventListener("click", stopGame);
   stopButton.disabled = true;
-
-  let moveCounter = 0;
-  let startTime;
-  let elapsedTime = 0;
-  let timerInterval;
 
   function timeToString(time) {
     let diffInMin = time / 60000;
@@ -112,6 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function startGame() {
     stopTimer();
     moveCounter = 0;
+    updateMoveCounter();
     createGameBoard();
     startTimer();
     document
@@ -121,13 +103,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function stopGame() {
     stopTimer();
-    createGameBoard();
     moveCounter = 0;
     updateMoveCounter();
+    createGameBoard();
     document
       .querySelectorAll(".item")
       .forEach((card) => card.classList.remove("enabled"));
   }
 
-  createGameBoard();
+  function fetchCardData() {
+    fetch(apiUrl)
+      .then((response) => response.json())
+      .then((data) => {
+        emojis = data;
+        createGameBoard();
+      })
+      .catch((error) => {
+        console.error("Error fetching card data:", error);
+      });
+  }
+
+  fetchCardData();
 });
