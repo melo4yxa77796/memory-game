@@ -6,6 +6,10 @@ let moveCounter = 0;
 let startTime;
 let elapsedTime = 0;
 let timerInterval;
+let maxTime;
+let maxMoves;
+let lockBoard = false;
+let firstCard, secondCard;
 
 document.addEventListener("DOMContentLoaded", () => {
   const startButton = document.getElementById("start");
@@ -13,7 +17,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   startButton.addEventListener("click", startGame);
   stopButton.addEventListener("click", stopGame);
-  stopButton.disabled = true;
 
   function timeToString(time) {
     let diffInMin = time / 60000;
@@ -30,6 +33,10 @@ document.addEventListener("DOMContentLoaded", () => {
     timerInterval = setInterval(() => {
       elapsedTime = Date.now() - startTime;
       document.getElementById("timer").innerHTML = timeToString(elapsedTime);
+      if (elapsedTime >= maxTime) {
+        alert("Time's up!");
+        stopGame();
+      }
     }, 1000);
     document.getElementById("start").disabled = true;
     document.getElementById("stop").disabled = false;
@@ -45,42 +52,62 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function updateMoveCounter() {
     document.getElementById("moveCounter").innerHTML = `Moves: ${moveCounter}`;
+    if (moveCounter >= maxMoves) {
+      alert("Move limit reached!");
+      stopGame();
+    }
   }
 
   function onCardClick() {
     if (
-      !this.classList.contains("boxOpen") &&
-      !this.classList.contains("boxMatch")
+      lockBoard ||
+      this.classList.contains("boxOpen") ||
+      this.classList.contains("boxMatch")
     ) {
-      this.classList.add("boxOpen");
-      moveCounter++;
-      updateMoveCounter();
-
-      setTimeout(() => {
-        const openBoxes = document.querySelectorAll(".boxOpen");
-        if (openBoxes.length > 1) {
-          if (openBoxes[0].dataset.emoji === openBoxes[1].dataset.emoji) {
-            openBoxes[0].classList.add("boxMatch");
-            openBoxes[1].classList.add("boxMatch");
-          }
-          openBoxes[0].classList.remove("boxOpen");
-          openBoxes[1].classList.remove("boxOpen");
-        }
-
-        if (document.querySelectorAll(".boxMatch").length === emojis.length) {
-          alert("win");
-          stopGame();
-        }
-      }, 500);
+      return;
     }
+
+    this.classList.add("boxOpen");
+    moveCounter++;
+    updateMoveCounter();
+
+    if (!firstCard) {
+      firstCard = this;
+      return;
+    }
+
+    secondCard = this;
+    lockBoard = true;
+
+    setTimeout(() => {
+      if (firstCard.dataset.emoji === secondCard.dataset.emoji) {
+        firstCard.classList.add("boxMatch");
+        secondCard.classList.add("boxMatch");
+
+        firstCard.classList.add("boxHidden");
+        secondCard.classList.add("boxHidden");
+      } else {
+        firstCard.classList.remove("boxOpen");
+        secondCard.classList.remove("boxOpen");
+      }
+
+      firstCard = null;
+      secondCard = null;
+      lockBoard = false;
+
+      if (document.querySelectorAll(".boxMatch").length === emojis.length) {
+        alert("win");
+        stopGame();
+      }
+    }, 1000);
   }
 
   function createGameBoard() {
     const gameContainer = document.querySelector(".game-container");
     gameContainer.innerHTML = "";
-    let shuf_emojis = emojis.sort(() => (Math.random() > 0.5 ? 1 : -1));
+    let shuffledEmojis = emojis.sort(() => (Math.random() > 0.5 ? 1 : -1));
 
-    shuf_emojis.forEach((emoji) => {
+    shuffledEmojis.forEach((emoji) => {
       let box = document.createElement("div");
       box.className = "item";
       box.innerHTML = emoji;
@@ -91,6 +118,9 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function startGame() {
+    maxTime = parseInt(document.getElementById("maxTime").value, 10) * 60000;
+    maxMoves = parseInt(document.getElementById("maxMoves").value, 10);
+
     stopTimer();
     moveCounter = 0;
     updateMoveCounter();
