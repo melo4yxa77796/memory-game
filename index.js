@@ -1,3 +1,4 @@
+
 const apiUrl =
   "https://raw.githubusercontent.com/melo4yxa77796/melo4yxa77796.github.io/main/images.json";
 
@@ -141,17 +142,17 @@ document.addEventListener("DOMContentLoaded", () => {
       .forEach((card) => card.classList.remove("enabled"));
   }
 
-  function fetchCardData() {
-    fetch(apiUrl)
-      .then((response) => response.json())
-      .then((data) => {
-        emojis = data;
-        createGameBoard();
-      })
-      .catch((error) => {
-        console.error("Error fetching card data:", error);
-      });
+  async function fetchCardData() {
+    try {
+      const response = await fetch(apiUrl);
+      emojis = await response.json();
+      createGameBoard();
+    } catch (error) {
+      console.error("Error fetching card data:", error);
+    }
   }
 
   fetchCardData();
 });
+
+
