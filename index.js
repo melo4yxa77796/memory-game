@@ -12,7 +12,7 @@ let maxMoves;
 let lockBoard = false;
 let firstCard, secondCard;
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded",async () => {
   const startButton = document.getElementById("start");
   const stopButton = document.getElementById("stop");
 
@@ -152,7 +152,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  fetchCardData();
+  await fetchCardData();
 });
 
 
